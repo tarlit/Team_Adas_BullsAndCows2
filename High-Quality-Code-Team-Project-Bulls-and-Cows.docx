@@ -1,8 +1,30 @@
 High-Quality Code – "Bulls and Cows" Game
-Your task is to write an interactive console-based implementation of the game "Bulls and Cows" in which the player tries to guess a secret number. At the start of the game, the computer generates a random secret number of 4 decimal digits (e.g. 7725). At each step, the player makes a guess to the computer (e.g. 2375) and the computer answers how many digits are correct (bulls) and how many digits are present in the secret number but are misplaced (cows). For example, if the secret number is 7725 and the guess number is 2375, this means 1 bull (the last digit '5') and 2 cows (the digits '2' and '7'). Note that a single digit can either represent a bull, or a cow, but not two bulls, two cows or bull and cow in the same time. For example, if the secret number is 2424 and the guess number is 4144, the result is 1 bull and 1 cow. The game ends when the player's guess is correct. Otherwise, the computer prints the number of bulls and cows of the last guess and invites the player to try another guess. When the game is finished, a new game automatically starts.
-If the player is bored, he or she can enter the command 'help' instead of a guess number and as  a response the computer should reveal a bull at a random position (different position every time). The player can request starting a new game by entering the command 'restart'.
-Your program should implement a local top scoreboard to keep the best results and the names of their authors. Initially, at the program start, the top scoreboard is empty. It keeps the top 5 results sorted in ascending order by the number of guesses. When a game is finished by correct guess of the secret number and without using the 'help' command, the player's result can enter in the top scoreboard if his or her number of guesses is less than some of the other achievements, staying in the top scoreboard. When the player's result enters the scoreboard, the player should enter his or her name or nickname.
-The player can request printing the top scoreboard during the game by entering the command 'top'. The player can request stopping the game and exiting from the program the command 'exit'.
+
+Your task is to write an interactive console-based implementation of the game "Bulls and Cows" in which the 
+player tries to guess a secret number. At the start of the game, the computer generates a random secret number 
+of 4 decimal digits (e.g. 7725). At each step, the player makes a guess to the computer (e.g. 2375) and the 
+computer answers how many digits are correct (bulls) and how many digits are present in the secret number but 
+are misplaced (cows). For example, if the secret number is 7725 and the guess number is 2375, this means 1 bull 
+(the last digit '5') and 2 cows (the digits '2' and '7'). Note that a single digit can either represent a bull, 
+or a cow, but not two bulls, two cows or bull and cow in the same time. For example, if the secret number is 
+2424 and the guess number is 4144, the result is 1 bull and 1 cow. The game ends when the player's guess is correct. 
+Otherwise, the computer prints the number of bulls and cows of the last guess and invites the player to try another 
+guess. When the game is finished, a new game automatically starts.
+
+If the player is bored, he or she can enter the command 'help' instead of a guess number and as  a response 
+the computer should reveal a bull at a random position (different position every time). The player can request 
+starting a new game by entering the command 'restart'.
+
+Your program should implement a local top scoreboard to keep the best results and the names of their authors. 
+Initially, at the program start, the top scoreboard is empty. It keeps the top 5 results sorted in ascending 
+order by the number of guesses. When a game is finished by correct guess of the secret number and without using 
+the 'help' command, the player's result can enter in the top scoreboard if his or her number of guesses is 
+less than some of the other achievements, staying in the top scoreboard. When the player's result enters 
+the scoreboard, the player should enter his or her name or nickname.
+
+The player can request printing the top scoreboard during the game by entering the command 'top'. 
+The player can request stopping the game and exiting from the program the command 'exit'.
+
 Example Game Session
 At the start of this game session, the computer's secret random number is 7725. The player's input is shown in italic:
 Welcome to "Bulls and Cows" game. Please try to guess my secret 4-digit number.
