@@ -1,0 +1,6 @@
+C:\Users\Gaby\Desktop\Team_Adas_BullsAndCows2.git\trunk\BullsAndCowsSourceRefactored\BullsAndCows\BullsAndCows\bin\Debug\BullsAndCows.exe.config
+C:\Users\Gaby\Desktop\Team_Adas_BullsAndCows2.git\trunk\BullsAndCowsSourceRefactored\BullsAndCows\BullsAndCows\bin\Debug\BullsAndCows.exe
+C:\Users\Gaby\Desktop\Team_Adas_BullsAndCows2.git\trunk\BullsAndCowsSourceRefactored\BullsAndCows\BullsAndCows\bin\Debug\BullsAndCows.pdb
+C:\Users\Gaby\Desktop\Team_Adas_BullsAndCows2.git\trunk\BullsAndCowsSourceRefactored\BullsAndCows\BullsAndCows\obj\Debug\BullsAndCows.csprojResolveAssemblyReference.cache
+C:\Users\Gaby\Desktop\Team_Adas_BullsAndCows2.git\trunk\BullsAndCowsSourceRefactored\BullsAndCows\BullsAndCows\obj\Debug\BullsAndCows.exe
+C:\Users\Gaby\Desktop\Team_Adas_BullsAndCows2.git\trunk\BullsAndCowsSourceRefactored\BullsAndCows\BullsAndCows\obj\Debug\BullsAndCows.pdb

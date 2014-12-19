@@ -1,6 +1,6 @@
 namespace BullsAndCows
 {
-    public struct rezultat
+    public struct GuessResult
     {
         public int Bulls;
         public int Cows;

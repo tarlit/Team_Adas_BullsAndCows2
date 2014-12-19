@@ -1,4 +1,4 @@
-namespace BullsAndCows
+﻿namespace BullsAndCows
 {
     using System;
 
@@ -8,25 +8,25 @@ namespace BullsAndCows
         public const string WelcomeMessage = "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.\nUse 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.";
         public const string WrongNumberMessage = "Wrong number!";
         public const string InvalidCommandMessage = "Incorrect guess or command!";
-        public const string NumberGuessedWithoutCheats = "Congratulations! You guessed the secret number in {0} {1}.\nPlease enter your name for the top scoreboard: ";
-        public const string NumberGuessedWithCheats = "Congratulations! You guessed the secret number in {0} {1} and {2} {3}.\nYou are not allowed to enter the top scoreboard.";
+        public const string NumberGuessedWithoutHints = "Congratulations! You guessed the secret number in {0} {1}.\nPlease enter your name for the top scoreboard: ";
+        public const string NumberGuessedWithHints = "Congratulations! You guessed the secret number in {0} {1} and {2} {3}.\nYou are not allowed to enter the top scoreboard.";
         public const string GoodBuyMessage = "Good bye!";
 
         static void Main(string[] args)
         {
-            BullsAndCowsNumber bullsAndCowsNumber = new BullsAndCowsNumber();
+            SecretNumber secretNumber = new SecretNumber();
             Scoreboard scoreBoard = new Scoreboard(ScoresFile);
             Console.WriteLine(WelcomeMessage);
             while (true)
             {
                 Console.Write("Enter your guess or command: ");
-                string command = Console.ReadLine();
-                if (command == "exit")
+                string playerCommand = Console.ReadLine();
+                if (playerCommand == "exit")
                 {
                     Console.WriteLine(GoodBuyMessage);
                     break;
                 }
-                switch (command)
+                switch (playerCommand)
                 {
                     case "top":
                         {
@@ -37,37 +37,37 @@ namespace BullsAndCows
                         {
                             Console.WriteLine();
                             Console.WriteLine(WelcomeMessage);
-                            bullsAndCowsNumber = new BullsAndCowsNumber();
+                            secretNumber = new SecretNumber();
                             break;
                         }
                     case "help":
                         {
-                            Console.WriteLine("The number looks like {0}.", bullsAndCowsNumber.GetCheat());
+                            Console.WriteLine("The number looks like {0}.", secretNumber.GetHint());
                             break;
                         }
                     default:
                         {
                             try
                             {
-                                rezultat guessResult = bullsAndCowsNumber.TryToGuess(command);
+                                GuessResult guessResult = secretNumber.TryToGuess(playerCommand);
                                 if (guessResult.Bulls == 4)
                                 {
-                                    if (bullsAndCowsNumber.cheats == 0)
+                                    if (secretNumber.HintsUsed == 0)
                                     {
-                                        Console.Write(NumberGuessedWithoutCheats, bullsAndCowsNumber.GuessesCount, bullsAndCowsNumber.GuessesCount == 1 ? "attempt" : "attempts");
+                                        Console.Write(NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
                                         string name = Console.ReadLine();
-                                        scoreBoard.AddScore(name, bullsAndCowsNumber.GuessesCount);
+                                        scoreBoard.AddScore(name, secretNumber.GuessesCount);
                                     }
                                     else
                                     {
-                                        Console.WriteLine(NumberGuessedWithCheats,
-                                            bullsAndCowsNumber.GuessesCount, bullsAndCowsNumber.GuessesCount == 1 ? "attempt" : "attempts",
-                                            bullsAndCowsNumber.cheats, bullsAndCowsNumber.cheats == 1? "cheat" : "cheats");
+                                        Console.WriteLine(NumberGuessedWithHints,
+                                            secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts",
+                                            secretNumber.HintsUsed, secretNumber.HintsUsed == 1 ? "cheat" : "cheats");
                                     }
                                     Console.Write(scoreBoard);
                                     Console.WriteLine();
                                     Console.WriteLine(WelcomeMessage);
-                                    bullsAndCowsNumber = new BullsAndCowsNumber();
+                                    secretNumber = new SecretNumber();
                                 }
                                 else
                                 {

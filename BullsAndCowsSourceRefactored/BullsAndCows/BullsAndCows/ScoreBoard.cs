@@ -7,20 +7,20 @@ namespace BullsAndCows
 
     public class Scoreboard
     {
-        private SortedSet<gameScore> scores;
+        private SortedSet<PlayerResult> playersResults;
         private const int MaxPlayersToShowInScoreboard = 10;
 
         public Scoreboard(string filename)
         {
-            this.scores = new SortedSet<gameScore>();
+            this.playersResults = new SortedSet<PlayerResult>();
             try
             {
-                using (StreamReader inputStream = new StreamReader(filename))
+                using (var inputStream = new StreamReader(filename))
                 {
                     while (!inputStream.EndOfStream)
                     {
                         string scoreString = inputStream.ReadLine();
-                        this.scores.Add(gameScore.Deserialize(scoreString));
+                        this.playersResults.Add(PlayerResult.Deserialize(scoreString));
                     }
                 }
             }
@@ -30,21 +30,21 @@ namespace BullsAndCows
             }
         }
 
-        public void AddScore(string name, int guesses)
+        public void AddScore(string playerName, int playerGuesses)
         {
-            gameScore newScore = new gameScore(name, guesses);
-            this.scores.Add(newScore);
+            var pleyerResult = new PlayerResult(playerName, playerGuesses);
+            this.playersResults.Add(pleyerResult);
         }
 
         public void SaveToFile(string filename)
         {
             try
             {
-                using (StreamWriter outputStream = new StreamWriter(filename))
+                using (var outputStream = new StreamWriter(filename))
                 {
-                    foreach (gameScore gameScore in scores)
+                    foreach (PlayerResult playerResult in playersResults)
                     {
-                        outputStream.WriteLine(gameScore.Serialize());
+                        outputStream.WriteLine(playerResult.Serialize());
                     }
                 }
             }
@@ -56,18 +56,21 @@ namespace BullsAndCows
 
         public override string ToString()
         {
-            if (scores.Count == 0)
+            if (playersResults.Count == 0)
             {
                 return "Top scoreboard is empty." + Environment.NewLine;
             }
-            StringBuilder scoreBoard = new StringBuilder();
+            var scoreBoard = new StringBuilder();
             scoreBoard.AppendLine("Scoreboard:");
-            int count = 0;
-            foreach (gameScore gameScore in scores)
+            int players = 0;
+            foreach (PlayerResult playerResult in playersResults)
             {
-                count++;
-                scoreBoard.AppendLine(string.Format("{0}. {1}", count, gameScore));
-                if (count > MaxPlayersToShowInScoreboard) break;
+                players++;
+                scoreBoard.AppendLine(string.Format("{0}. {1}", players, playerResult));
+                if (players > MaxPlayersToShowInScoreboard)
+                {
+                    break;
+                }
             }
             return scoreBoard.ToString();
         }
