@@ -24,7 +24,7 @@ namespace BullsAndCows
 
         public override bool Equals(object obj)
         {
-            PlayerResult objectToCompare = obj as PlayerResult;
+            var objectToCompare = obj as PlayerResult;
             if (objectToCompare == null)
             {
                 return false;
@@ -47,7 +47,7 @@ namespace BullsAndCows
 
         public int CompareTo(object obj)
         {
-            PlayerResult objectToCompare = obj as PlayerResult;
+            var objectToCompare = obj as PlayerResult;
             if (objectToCompare == null)
             {
                 return -1;
