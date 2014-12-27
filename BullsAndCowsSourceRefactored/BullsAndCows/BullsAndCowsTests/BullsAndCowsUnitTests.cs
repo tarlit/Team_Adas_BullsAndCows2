@@ -8,7 +8,7 @@
 
     public class BullsAndCowsUnitTests
     {
-        private static SecretNumber testSecretNumber= new SecretNumber();
+        private static SecretNumber testSecretNumber= SecretNumber.Instance;
 
         [Test]
         public void EmptyGuessNumberStringShouldThrowArgumentException()
@@ -17,7 +17,7 @@
 
             Assert.Catch(typeof (ArgumentException), () =>
             {
-                testSecretNumber.TryToGuess(guessNumber);
+                testSecretNumber.CheckGuessResult(guessNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
 
@@ -28,18 +28,29 @@
 
             Assert.Catch(typeof(ArgumentException), () =>
             {
-                testSecretNumber.TryToGuess(guessNumber);
+                testSecretNumber.CheckGuessResult(guessNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
 
         [Test]
         public void ShortGuessNumberStringShouldThrowArgumentException()
         {
-            string guessNumber = "12345";
+            string guessNumber = "123";
 
             Assert.Catch(typeof(ArgumentException), () =>
             {
-                testSecretNumber.TryToGuess(guessNumber);
+                testSecretNumber.CheckGuessResult(guessNumber);
+            }, "Passing empty guess number didn't throw correct exception.");
+        }
+
+        [Test]
+        public void GuessNumberStringContainingInvalidSymbolsShouldThrowArgumentException()
+        {
+            string guessNumber = "-123";
+
+            Assert.Catch(typeof(ArgumentException), () =>
+            {
+                testSecretNumber.CheckGuessResult(guessNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
     }

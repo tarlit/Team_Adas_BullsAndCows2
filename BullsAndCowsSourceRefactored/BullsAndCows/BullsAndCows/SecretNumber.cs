@@ -5,16 +5,33 @@ namespace BullsAndCows
 
     public class SecretNumber
     {
+        private const int SecretNumberDigitsCount = 4;
+        private const char DefaultSymbol = 'X';
+
+        private static SecretNumber instance;
         private Random randomGenerator;
         private char[] hintNumber;
 
-        public SecretNumber()
+        private SecretNumber()
         {
             randomGenerator = new Random();
-            hintNumber = new char[4] { 'X', 'X', 'X', 'X' };
+            hintNumber = new char[] { DefaultSymbol, DefaultSymbol, DefaultSymbol, DefaultSymbol };
             this.HintsUsed = 0;
             this.GuessesCount = 0;
             this.GenerateSecretDigits();
+        }
+
+        public static SecretNumber Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new SecretNumber();
+                }
+
+                return instance;
+            }
         }
 
         public int HintsUsed
@@ -55,12 +72,12 @@ namespace BullsAndCows
 
         public string GetHint()
         {
-            if (this.HintsUsed < 4)
+            if (this.HintsUsed < SecretNumberDigitsCount)
             {
                 while (true)
                 {
-                    int hintPossition = randomGenerator.Next(0, 4);
-                    if (hintNumber[hintPossition] == 'X')
+                    int hintPossition = randomGenerator.Next(0, SecretNumberDigitsCount);
+                    if (hintNumber[hintPossition] == DefaultSymbol)
                     {
                         switch (hintPossition)
 	                    {
@@ -81,34 +98,34 @@ namespace BullsAndCows
             return new String(hintNumber);
         }
 
-        public GuessResult TryToGuess(string number)
+        public GuessResult CheckGuessResult(string stringInput)
         {
-            if (string.IsNullOrEmpty(number) || number.Trim().Length != 4)
-            {
-                throw new ArgumentException("Invalid string number");
-            }
-            return TryToGuess(number[0] - '0', number[1] - '0', number[2] - '0', number[3] - '0');
+            uint playerGuessNumber = ValidateGuessNumber(stringInput);
+            return GetGuessResult(stringInput[0] - '0', stringInput[1] - '0', stringInput[2] - '0', stringInput[3] - '0');
         }
 
-        private GuessResult TryToGuess(int firstDigit, int secondDigit, int thirdDigit, int fourthDigit)
+        private uint ValidateGuessNumber(string stringInput)
         {
-            if (firstDigit < 0 || firstDigit > 9)
+            string guessNumberAsString = stringInput.Trim();
+            if (string.IsNullOrEmpty(guessNumberAsString))
             {
-                throw new ArgumentException("Invalid first digit");
+                throw new ArgumentException("Empty input string passed.");
             }
-            if (secondDigit < 0 || secondDigit > 9)
+            if (guessNumberAsString.Length != SecretNumberDigitsCount)
             {
-                throw new ArgumentException("Invalid second digit");
+                throw new ArgumentException("Wrong length for the input string");
             }
-            if (thirdDigit < 0 || thirdDigit > 9)
+            uint guessNumber = 0;
+            bool isValidNumber = uint.TryParse(guessNumberAsString, out guessNumber);
+            if (!isValidNumber)
             {
-                throw new ArgumentException("Invalid third digit");
+                throw new ArgumentException("Input string is not a correct number");
             }
-            if (fourthDigit < 0 || fourthDigit > 9)
-            {
-                throw new ArgumentException("Invalid fourth digit");
-            }
+            return guessNumber;
+        }
 
+        private GuessResult GetGuessResult(int firstDigit, int secondDigit, int thirdDigit, int fourthDigit)
+        {
             this.GuessesCount++;
 
             int bulls = 0;

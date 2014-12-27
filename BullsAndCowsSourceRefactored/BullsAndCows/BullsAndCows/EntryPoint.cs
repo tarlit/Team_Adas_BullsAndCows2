@@ -14,8 +14,8 @@
 
         static void Main(string[] args)
         {
-            SecretNumber secretNumber = new SecretNumber();
-            Scoreboard scoreBoard = new Scoreboard(ScoresFile);
+            var secretNumber = SecretNumber.Instance;
+            var scoreBoard = new Scoreboard(ScoresFile);
             Console.WriteLine(WelcomeMessage);
             while (true)
             {
@@ -37,7 +37,7 @@
                         {
                             Console.WriteLine();
                             Console.WriteLine(WelcomeMessage);
-                            secretNumber = new SecretNumber();
+                            secretNumber = SecretNumber.Instance;
                             break;
                         }
                     case "help":
@@ -49,7 +49,7 @@
                         {
                             try
                             {
-                                GuessResult guessResult = secretNumber.TryToGuess(playerCommand);
+                                GuessResult guessResult = secretNumber.CheckGuessResult(playerCommand);
                                 if (guessResult.Bulls == 4)
                                 {
                                     if (secretNumber.HintsUsed == 0)
@@ -67,7 +67,7 @@
                                     Console.Write(scoreBoard);
                                     Console.WriteLine();
                                     Console.WriteLine(WelcomeMessage);
-                                    secretNumber = new SecretNumber();
+                                    secretNumber = SecretNumber.Instance;
                                 }
                                 else
                                 {
