@@ -8,42 +8,16 @@ namespace BullsAndCows
         private const int SecretNumberDigitsCount = 4;
         private const char DefaultSymbol = 'X';
 
-        private static SecretNumber instance;
         private Random randomGenerator;
         private char[] hintNumber;
 
-        private SecretNumber()
+        public SecretNumber()
         {
             randomGenerator = new Random();
             hintNumber = new char[] { DefaultSymbol, DefaultSymbol, DefaultSymbol, DefaultSymbol };
             this.HintsUsed = 0;
             this.GuessesCount = 0;
             this.GenerateSecretDigits();
-        }
-
-        public static SecretNumber Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new SecretNumber();
-                }
-
-                return instance;
-            }
-        }
-
-        public int HintsUsed
-        {
-            get;
-            private set;
-        }
-
-        public int GuessesCount
-        {
-            get;
-            private set;
         }
 
         public int FirstDigit
@@ -65,6 +39,18 @@ namespace BullsAndCows
         }
 
         public int FourthDigit
+        {
+            get;
+            private set;
+        }
+
+        public int HintsUsed
+        {
+            get;
+            private set;
+        }
+
+        public int GuessesCount
         {
             get;
             private set;

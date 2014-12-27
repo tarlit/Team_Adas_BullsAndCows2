@@ -4,8 +4,9 @@ namespace BullsAndCows
     using System.Collections.Generic;
     using System.Text;
     using System.IO;
+    using BullsAndCows.Interfaces;
 
-    public class Scoreboard
+    public class Scoreboard : IResultStorage
     {
         private SortedSet<PlayerResult> playersResults;
         private const int MaxPlayersToShowInScoreboard = 10;
@@ -60,6 +61,7 @@ namespace BullsAndCows
             {
                 return "Top scoreboard is empty." + Environment.NewLine;
             }
+
             var scoreBoard = new StringBuilder();
             scoreBoard.AppendLine("Scoreboard:");
             int players = 0;
@@ -72,6 +74,7 @@ namespace BullsAndCows
                     break;
                 }
             }
+
             return scoreBoard.ToString();
         }
     }

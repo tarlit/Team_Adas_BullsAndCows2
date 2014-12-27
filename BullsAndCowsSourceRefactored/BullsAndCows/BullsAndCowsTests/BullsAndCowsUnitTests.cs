@@ -8,7 +8,7 @@
 
     public class BullsAndCowsUnitTests
     {
-        private static SecretNumber testSecretNumber= SecretNumber.Instance;
+        private static SecretNumber testSecretNumber= new SecretNumber();
 
         [Test]
         public void EmptyGuessNumberStringShouldThrowArgumentException()

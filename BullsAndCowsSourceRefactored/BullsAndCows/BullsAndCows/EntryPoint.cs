@@ -14,7 +14,7 @@
 
         static void Main(string[] args)
         {
-            var secretNumber = SecretNumber.Instance;
+            var secretNumber = new SecretNumber();
             var scoreBoard = new Scoreboard(ScoresFile);
             Console.WriteLine(WelcomeMessage);
             while (true)
@@ -37,7 +37,7 @@
                         {
                             Console.WriteLine();
                             Console.WriteLine(WelcomeMessage);
-                            secretNumber = SecretNumber.Instance;
+                            secretNumber = new SecretNumber();
                             break;
                         }
                     case "help":
@@ -67,7 +67,7 @@
                                     Console.Write(scoreBoard);
                                     Console.WriteLine();
                                     Console.WriteLine(WelcomeMessage);
-                                    secretNumber = SecretNumber.Instance;
+                                    secretNumber = new SecretNumber();
                                 }
                                 else
                                 {

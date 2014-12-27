@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IResultStorage.cs" />
     <Compile Include="SecretNumber.cs" />
     <Compile Include="PlayerResult.cs" />
     <Compile Include="EntryPoint.cs" />
