@@ -6,12 +6,12 @@ namespace BullsAndCows
     using System.IO;
     using BullsAndCows.Interfaces;
 
-    public class Scoreboard : IResultStorage
+    public class ScoreBoard : IResultStorage
     {
         private SortedSet<PlayerResult> playersResults;
         private const int MaxPlayersToShowInScoreboard = 10;
 
-        public Scoreboard(string filename)
+        public ScoreBoard(string filename)
         {
             this.playersResults = new SortedSet<PlayerResult>();
             try
