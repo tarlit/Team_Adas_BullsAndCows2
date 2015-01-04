@@ -15,7 +15,7 @@
         static void Main(string[] args)
         {
             var secretNumber = new SecretNumber();
-            var scoreBoard = new Scoreboard(ScoresFile);
+            var scoreBoard = new ScoreBoard(ScoresFile);
             Console.WriteLine(WelcomeMessage);
             while (true)
             {
