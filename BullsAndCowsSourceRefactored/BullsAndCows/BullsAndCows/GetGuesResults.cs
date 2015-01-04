@@ -17,36 +17,32 @@
         bool isThirdDigitBullOrCow = false;
         bool isFourthDigitBullOrCow = false;
 
-
-        // checks if firstDigit is a bull:
+        // checks if 1st, 2nd, 3rd of 4th digits are bull:
         if (this.FirstDigit == firstDigit)
         {
             isFirstDigitBullOrCow = true;
             bulls++;
         }
-    
-        // checks if secondDigit is a bull:
+
         if (this.SecondDigit == secondDigit)
         {
             isSecondDigitBullOrCow = true;
             bulls++;
         }
         
-        // checks if thirdDigit is a bull:
         if (this.ThirdDigit == thirdDigit)
         {
             isThirdDigitBullOrCow = true;
             bulls++;
         }
         
-        // checks if fourthDigit is a bull:
         if (this.FourthDigit == fourthDigit)
         {
             isFourthDigitBullOrCow = true;
             bulls++;
         }
         
-        // checks if firstDigit is cow:
+        // checks if 1st, 2nd, 3rd of 4th digits are cow:
         if (!isSecondDigitBullOrCow && firstDigit == SecondDigit)
         {
             isSecondDigitBullOrCow = true;
@@ -63,7 +59,6 @@
             cows++;
         }
 
-        // checks if secondDigit is cow:
         if (!isFirstDigitBullOrCow && secondDigit == FirstDigit)
         {
             isFirstDigitBullOrCow = true;
@@ -80,7 +75,6 @@
             cows++;
         }
 
-        // checks if thirdDigit is cow:
         if (!isFirstDigitBullOrCow && thirdDigit == FirstDigit)
         {
             isFirstDigitBullOrCow = true;
@@ -97,7 +91,6 @@
             cows++;
         }
 
-        // checks if fourthDigit is cow:
         if (!isFirstDigitBullOrCow && fourthDigit == FirstDigit)
         {
             isFirstDigitBullOrCow = true;
