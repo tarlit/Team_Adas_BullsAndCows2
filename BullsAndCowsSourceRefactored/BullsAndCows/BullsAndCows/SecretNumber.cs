@@ -5,17 +5,11 @@ namespace BullsAndCows
 
     public class SecretNumber
     {
-        private const int SecretNumberDigitsCount = 4;
-        private const char DefaultSymbol = 'X';
 
         private Random randomGenerator;
-        private char[] hintNumber;
-
         public SecretNumber()
         {
             randomGenerator = new Random();
-            hintNumber = new char[] { DefaultSymbol, DefaultSymbol, DefaultSymbol, DefaultSymbol };
-            this.HintsUsed = 0;
             this.GuessesCount = 0;
             this.GenerateSecretDigits();
         }
@@ -44,44 +38,10 @@ namespace BullsAndCows
             private set;
         }
 
-        public int HintsUsed
-        {
-            get;
-            private set;
-        }
-
         public int GuessesCount
         {
             get;
             private set;
-        }
-
-        public string GetHint()
-        {
-            if (this.HintsUsed < SecretNumberDigitsCount)
-            {
-                while (true)
-                {
-                    int hintPossition = randomGenerator.Next(0, SecretNumberDigitsCount);
-                    if (hintNumber[hintPossition] == DefaultSymbol)
-                    {
-                        switch (hintPossition)
-	                    {
-                            case 0: hintNumber[hintPossition] = (char)(this.FirstDigit + '0');
-                                break;
-                            case 1: hintNumber[hintPossition] = (char)(this.SecondDigit + '0');
-                                break;
-                            case 2: hintNumber[hintPossition] = (char)(this.ThirdDigit + '0');
-                                break;
-                            default: hintNumber[hintPossition] = (char)(this.FourthDigit + '0');
-                                break;
-	                    }
-                        break;
-                    }
-                }
-                HintsUsed++;
-            }
-            return new String(hintNumber);
         }
 
         public GuessResult CheckGuessResult(string stringInput)
@@ -95,17 +55,17 @@ namespace BullsAndCows
             string guessNumberAsString = stringInput.Trim();
             if (string.IsNullOrEmpty(guessNumberAsString))
             {
-                throw new ArgumentException("Empty input string passed.");
+                throw new ArgumentException(GameConstants.EmptyInputMessage);
             }
-            if (guessNumberAsString.Length != SecretNumberDigitsCount)
+            if (guessNumberAsString.Length != GameConstants.SecretNumberDigitsCount)
             {
-                throw new ArgumentException("Wrong length for the input string");
+                throw new ArgumentException(GameConstants.WrongLenghtInputMessage);
             }
             uint guessNumber = 0;
             bool isValidNumber = uint.TryParse(guessNumberAsString, out guessNumber);
             if (!isValidNumber)
             {
-                throw new ArgumentException("Input string is not a correct number");
+                throw new ArgumentException(GameConstants.IncorrectNumberMessage);
             }
             return guessNumber;
         }

@@ -11,5 +11,11 @@ namespace BullsAndCows
         public const string NumberGuessedWithoutHints = "Congratulations! You guessed the secret number in {0} {1}.\nPlease enter your name for the top scoreboard: ";
         public const string NumberGuessedWithHints = "Congratulations! You guessed the secret number in {0} {1} and {2} {3}.\nYou are not allowed to enter the top scoreboard.";
         public const string GoodBuyMessage = "Good bye!";
+        public const char DefaultSymbol = 'X';
+        public const int SecretNumberDigitsCount = 4;
+        public const string EmptyInputMessage = "Empty input string passed.";
+        public const string WrongLenghtInputMessage = "Wrong length for the input string";
+        public const string IncorrectNumberMessage = "Input string is not a correct number";
+
     }
 }
