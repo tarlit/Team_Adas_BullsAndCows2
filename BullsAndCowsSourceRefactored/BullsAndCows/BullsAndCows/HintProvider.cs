@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace BullsAndCows
+﻿namespace BullsAndCows
 {
+    using System;
+
     public class HintProvider
     {
         private char[] hintNumber = { GameConstants.DefaultSymbol, GameConstants.DefaultSymbol, GameConstants.DefaultSymbol, GameConstants.DefaultSymbol };
@@ -36,8 +36,9 @@ namespace BullsAndCows
                                 hintNumber[hintPossition] = (char)(secretNumber.ThirdDigit + '0');
                                 break;
                             default:
-                                hintNumber[hintPossition] = (char)(secretNumber.FourthDigit + '0');
+                                hintNumber[hintPossition] = (char)(Convert.ToChar(secretNumber.FourthDigit) + '0');
                                 break;
+                                
                         }
                         break;
                     }

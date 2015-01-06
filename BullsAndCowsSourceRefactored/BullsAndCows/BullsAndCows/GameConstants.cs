@@ -16,6 +16,8 @@ namespace BullsAndCows
         public const string EmptyInputMessage = "Empty input string passed.";
         public const string WrongLenghtInputMessage = "Wrong length for the input string";
         public const string IncorrectNumberMessage = "Input string is not a correct number";
+        // Commands
+        public const string Exit = "exit";
 
     }
 }

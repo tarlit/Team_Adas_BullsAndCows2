@@ -1,37 +1,79 @@
-﻿using System;
-
-namespace BullsAndCows
+﻿namespace BullsAndCows
 {
+    using System;
+
     class ConsoleEngine
     {
+        private static readonly ConsoleEngine consoleEngineInstance;
+        private string input;
+        private string output;
+        private SecretNumber secretNumber;
+        private HintProvider hintProvider;
+        private ScoreBoard scoreBoard;
 
-        public void Run()
+        public string Output
         {
-            var hintProvider = new HintProvider();
-            var secretNumber = new SecretNumber();
-            var scoreBoard = new ScoreBoard(GameConstants.ScoresFile);
-            Console.WriteLine(GameConstants.WelcomeMessage);
-
-            while (true)
+            get
             {
-                Console.Write("Enter your guess or command: ");
-                string playerCommand = Console.ReadLine();
+                return this.output;
+            }
+
+            private set
+            {
+                this.output = value;
+            }
+        }
+
+        public string Input
+        {
+            get
+            {
+                return this.input;
+            }
+
+            set
+            {
+                this.input = value;
+            }
+        }
+
+        private ConsoleEngine(SecretNumber secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
+        {
+            this.secretNumber = secretNumber;
+            this.hintProvider = hintProvider;
+            this.scoreBoard = scoreBoard;
+            this.output = GameConstants.WelcomeMessage;
+        }
+
+        public static ConsoleEngine GetEngine(SecretNumber secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
+        {
+            if (consoleEngineInstance == null)
+            {
+                return new ConsoleEngine(secretNumber, hintProvider, scoreBoard);
+            }
+            else
+            {
+                return consoleEngineInstance;
+            }
+        }
+
+        public void ParseCommand(string playerCommand)
+        {
                 if (playerCommand == "exit")
                 {
-                    Console.WriteLine(GameConstants.GoodBuyMessage);
-                    break;
+                    this.output = GameConstants.GoodBuyMessage;
                 }
+
                 switch (playerCommand)
                 {
                     case "top":
                         {
-                            Console.Write(scoreBoard);
+                            this.output = scoreBoard.ToString();
                             break;
                         }
                     case "restart":
                         {
-                            Console.WriteLine();
-                            Console.WriteLine(GameConstants.WelcomeMessage);
+                            this.output = GameConstants.WelcomeMessage;
                             secretNumber = new SecretNumber();
                             break;
                         }
@@ -39,11 +81,11 @@ namespace BullsAndCows
                         {
                             if (secretNumber == null)
                             {
-                                Console.WriteLine(GameConstants.EmptyInputMessage);
+                                this.output = GameConstants.EmptyInputMessage;
                             }
                             else
                             {
-                                Console.WriteLine("The number looks like {0}.", hintProvider.GetHint(secretNumber));
+                                this.output = string.Format("The number looks like {0}.", this.hintProvider.GetHint(secretNumber));
                             }
                             break;   
                         }
@@ -56,35 +98,33 @@ namespace BullsAndCows
                                 {
                                     if (hintProvider.HintsUsed == 0)
                                     {
-                                        Console.Write(GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
+                                        this.output = string.Format(GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
                                         string name = Console.ReadLine();
                                         scoreBoard.AddScore(name, secretNumber.GuessesCount);
                                     }
                                     else
                                     {
-                                        Console.WriteLine(GameConstants.NumberGuessedWithHints,
+                                        this.output = string.Format(GameConstants.NumberGuessedWithHints,
                                             secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts",
                                             hintProvider.HintsUsed, hintProvider.HintsUsed == 1 ? "cheat" : "cheats");
                                     }
-                                    Console.Write(scoreBoard);
-                                    Console.WriteLine();
-                                    Console.WriteLine(GameConstants.WelcomeMessage);
+                                    this.output = scoreBoard.ToString() + Environment.NewLine +
+                                                  GameConstants.WelcomeMessage + Environment.NewLine;
                                     secretNumber = new SecretNumber();
                                 }
                                 else
                                 {
-                                    Console.WriteLine("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
+                                    this.output = string.Format("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
                                 }
                             }
                             catch (ArgumentException)
                             {
-                                Console.WriteLine(GameConstants.InvalidCommandMessage);
+                                this.output = GameConstants.InvalidCommandMessage;
                             }
                             break;
                         }
                 }
             }
-            scoreBoard.SaveToFile(GameConstants.ScoresFile);
-        }
+            // scoreBoard.SaveToFile(GameConstants.ScoresFile);
     }
 }

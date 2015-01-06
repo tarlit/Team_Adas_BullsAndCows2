@@ -6,8 +6,23 @@
      {
          static void Main()
          {
-             var consoleEngine = new ConsoleEngine();
-             consoleEngine.Run();
+             var hintProvider = new HintProvider();
+             var secretNumber = new SecretNumber();
+             var scoreBoard = new ScoreBoard(GameConstants.ScoresFile);
+             var consoleEngine = ConsoleEngine.GetEngine(secretNumber, hintProvider, scoreBoard);
+             StartGame(consoleEngine);
+         }
+
+         private static void StartGame(ConsoleEngine engine)
+         {
+             Console.WriteLine(engine.Output);
+             string playerInput = Console.ReadLine();
+             while (playerInput != GameConstants.Exit)
+             {
+                 engine.ParseCommand(playerInput);
+                 Console.WriteLine(engine.Output);
+                 playerInput = Console.ReadLine();
+             }
          }
      }
  }
