@@ -1,6 +1,7 @@
 ﻿namespace BullsAndCowsTests
 {
     using System;
+    using System.Collections.Generic;
     using BullsAndCows;
     using NUnit.Framework;
 
@@ -8,7 +9,7 @@
 
     public class BullsAndCowsUnitTests
     {
-        private static SecretNumber testSecretNumber= new SecretNumber();
+        private static IList<int> testSecretNumber = new int[] {1, 2, 4, 3};
 
         [Test]
         public void EmptyGuessNumberStringShouldThrowArgumentException()
@@ -17,7 +18,7 @@
 
             Assert.Catch(typeof (ArgumentException), () =>
             {
-                testSecretNumber.CheckGuessResult(guessNumber);
+                SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
 
@@ -28,7 +29,7 @@
 
             Assert.Catch(typeof(ArgumentException), () =>
             {
-                testSecretNumber.CheckGuessResult(guessNumber);
+                SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
 
@@ -39,7 +40,7 @@
 
             Assert.Catch(typeof(ArgumentException), () =>
             {
-                testSecretNumber.CheckGuessResult(guessNumber);
+                SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
 
@@ -50,7 +51,7 @@
 
             Assert.Catch(typeof(ArgumentException), () =>
             {
-                testSecretNumber.CheckGuessResult(guessNumber);
+                SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber);
             }, "Passing empty guess number didn't throw correct exception.");
         }
     }

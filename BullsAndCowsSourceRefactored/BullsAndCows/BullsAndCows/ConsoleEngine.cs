@@ -1,14 +1,16 @@
 ﻿namespace BullsAndCows
 {
     using System;
+    using System.Collections.Generic;
 
     class ConsoleEngine
     {
         private static readonly ConsoleEngine consoleEngineInstance;
         private string output;
-        private SecretNumber secretNumber;
+        private IList<int> secretNumber;
         private HintProvider hintProvider;
         private ScoreBoard scoreBoard;
+        private int guessesCount;
 
         public string Output
         {
@@ -23,15 +25,16 @@
             }
         }
 
-        private ConsoleEngine(SecretNumber secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
+        private ConsoleEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
         {
             this.secretNumber = secretNumber;
             this.hintProvider = hintProvider;
             this.scoreBoard = scoreBoard;
+            this.guessesCount = 0;
             this.output = GameConstants.WelcomeMessage;
         }
 
-        public static ConsoleEngine GetEngine(SecretNumber secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
+        public static ConsoleEngine GetEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
         {
             if (consoleEngineInstance == null)
             {
@@ -45,35 +48,35 @@
 
         public void ParseCommand(string playerInput)
         {
-                if (playerInput == GameCommands.Exit)
-                {
-                    this.output = GameConstants.GoodBuyMessage;
-                }
+            if (playerInput == GameCommands.Exit)
+            {
+                this.output = GameConstants.GoodBuyMessage;
+            }
 
-                switch (playerInput)
+            switch (playerInput)
+            {
+                case GameCommands.Top:
                 {
-                    case GameCommands.Top:
-                    {
-                        this.output = scoreBoard.ToString();
-                        break;
-                    }
-                    case GameCommands.Restart:
-                    {
-                        ProcessRestartCommand();
-                        break;
-                    }
-                    case GameCommands.Help:
-                    {
-                        ProcessHelpCommand();
-                        break;   
-                    }
-                    default:
-                    {
-                        ProcessGuessNumber(playerInput);
-                        break;
-                    }
+                    this.output = scoreBoard.ToString();
+                    break;
+                }
+                case GameCommands.Restart:
+                {
+                    ProcessRestartCommand();
+                    break;
+                }
+                case GameCommands.Help:
+                {
+                    ProcessHelpCommand();
+                    break;   
+                }
+                default:
+                {
+                    ProcessGuessNumber(playerInput);
+                    break;
                 }
             }
+        }
 
         public void SaveGameResult()
         {
@@ -83,7 +86,8 @@
         private void ProcessRestartCommand()
         {
             this.output = GameConstants.WelcomeMessage;
-            secretNumber = new SecretNumber();
+            secretNumber = SecretNumberProcessor.GenerateSecretNumber();
+            this.guessesCount = 0;
         }
 
         private void ProcessHelpCommand()
@@ -102,25 +106,26 @@
         {
             try
             {
-                FormattedGuessResult guessResult = secretNumber.CheckGuessResult(playerCommand);
+                FormattedGuessResult guessResult = SecretNumberProcessor.CheckGuessResult(playerCommand, this.secretNumber);
                 if (guessResult.Bulls == 4)
                 {
                     if (hintProvider.HintsUsed == 0)
                     {
                         this.output = string.Format(
-                            GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
+                            GameConstants.NumberGuessedWithoutHints, this.guessesCount, this.guessesCount == 1 ? "attempt" : "attempts");
                         string name = Console.ReadLine();
-                        scoreBoard.AddScore(name, secretNumber.GuessesCount);
+                        scoreBoard.AddScore(name, this.guessesCount);
                     }
                     else
                     {
                         this.output = string.Format(GameConstants.NumberGuessedWithHints,
-                            secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts",
+                            this.guessesCount, this.guessesCount == 1 ? "attempt" : "attempts",
                             hintProvider.HintsUsed, hintProvider.HintsUsed == 1 ? "cheat" : "cheats");
                     }
                     this.output += scoreBoard.ToString() + Environment.NewLine +
                                     GameConstants.WelcomeMessage + Environment.NewLine;
-                    secretNumber = new SecretNumber();
+                    secretNumber = SecretNumberProcessor.GenerateSecretNumber();
+                    this.guessesCount = 0;
                 }
                 else
                 {

@@ -1,6 +1,7 @@
 ﻿namespace BullsAndCows
 {
     using System;
+    using System.Collections.Generic;
 
     public class HintProvider
     {
@@ -14,7 +15,7 @@
 
         private readonly Random randomGenerator = new Random();
 
-        public string GetHint(SecretNumber secretNumber)
+        public string GetHint(IList<int> secretNumber)
         {
 
             if (this.HintsUsed < GameConstants.SecretNumberDigitsCount)
@@ -27,16 +28,16 @@
                         switch (hintPossition)
                         {
                             case 0:
-                                hintNumber[hintPossition] = (char)(secretNumber.FirstDigit + '0');
+                                hintNumber[hintPossition] = (char)(secretNumber[0] + '0');
                                 break;
                             case 1:
-                                hintNumber[hintPossition] = (char)(secretNumber.SecondDigit + '0');
+                                hintNumber[hintPossition] = (char)(secretNumber[1] + '0');
                                 break;
                             case 2:
-                                hintNumber[hintPossition] = (char)(secretNumber.ThirdDigit + '0');
+                                hintNumber[hintPossition] = (char)(secretNumber[2] + '0');
                                 break;
                             default:
-                                hintNumber[hintPossition] = (char)(Convert.ToChar(secretNumber.FourthDigit) + '0');
+                                hintNumber[hintPossition] = (char)(secretNumber[3] + '0');
                                 break;
                                 
                         }

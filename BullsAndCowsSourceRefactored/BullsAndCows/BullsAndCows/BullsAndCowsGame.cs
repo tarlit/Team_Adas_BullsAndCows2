@@ -7,7 +7,7 @@
          static void Main()
          {
              var hintProvider = new HintProvider();
-             var secretNumber = new SecretNumber();
+             var secretNumber = SecretNumberProcessor.GenerateSecretNumber();
              var scoreBoard = new ScoreBoard(GameConstants.ScoresFile);
              var consoleEngine = ConsoleEngine.GetEngine(secretNumber, hintProvider, scoreBoard);
              StartGame(consoleEngine);

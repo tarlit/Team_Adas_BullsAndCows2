@@ -47,7 +47,7 @@
     <Compile Include="GetGuesResults.cs" />
     <Compile Include="HintProvider.cs" />
     <Compile Include="Interfaces\IResultStorage.cs" />
-    <Compile Include="SecretNumber.cs" />
+    <Compile Include="SecretNumberProcessor.cs" />
     <Compile Include="PlayerResult.cs" />
     <Compile Include="BullsAndCowsGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
