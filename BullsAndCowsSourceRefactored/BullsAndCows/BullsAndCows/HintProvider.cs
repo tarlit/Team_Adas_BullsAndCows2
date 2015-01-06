@@ -11,7 +11,7 @@ namespace BullsAndCows
             get;
             private set;
         }
-        
+
         private readonly Random randomGenerator = new Random();
 
         public string GetHint(SecretNumber secretNumber)
