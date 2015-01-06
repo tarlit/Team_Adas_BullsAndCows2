@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameConstants.cs" />
+    <Compile Include="GetGuesResults.cs" />
+    <Compile Include="GetHint.cs" />
     <Compile Include="Interfaces\IResultStorage.cs" />
     <Compile Include="SecretNumber.cs" />
     <Compile Include="PlayerResult.cs" />

@@ -4,7 +4,7 @@
 
      public class EntryPoint
      {
-         static void Main(string[] args)
+         static void Main()
          {
              var secretNumber = new SecretNumber();
              var scoreBoard = new ScoreBoard(GameConstants.ScoresFile);
