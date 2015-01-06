@@ -51,7 +51,7 @@
     <Compile Include="PlayerResult.cs" />
     <Compile Include="BullsAndCowsGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GuessResult.cs" />
+    <Compile Include="FormattedGuessResult.cs" />
     <Compile Include="ScoreBoard.cs" />
   </ItemGroup>
   <ItemGroup>

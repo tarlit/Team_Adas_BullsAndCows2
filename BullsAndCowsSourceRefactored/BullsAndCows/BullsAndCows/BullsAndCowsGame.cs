@@ -17,12 +17,13 @@
          {
              Console.WriteLine(engine.Output);
              string playerInput = Console.ReadLine();
-             while (playerInput != GameConstants.Exit)
+             while (playerInput != GameCommands.Exit)
              {
                  engine.ParseCommand(playerInput);
                  Console.WriteLine(engine.Output);
                  playerInput = Console.ReadLine();
              }
+             engine.SaveGameResult();
          }
      }
  }

@@ -44,7 +44,7 @@ namespace BullsAndCows
             private set;
         }
 
-        public GuessResult CheckGuessResult(string stringInput)
+        public FormattedGuessResult CheckGuessResult(string stringInput)
         {
             uint playerGuessNumber = ValidateGuessNumber(stringInput);
             return GetGuessResult(stringInput[0] - '0', stringInput[1] - '0', stringInput[2] - '0', stringInput[3] - '0');
@@ -70,7 +70,7 @@ namespace BullsAndCows
             return guessNumber;
         }
 
-        private GuessResult GetGuessResult(int firstDigit, int secondDigit, int thirdDigit, int fourthDigit)
+        private FormattedGuessResult GetGuessResult(int firstDigit, int secondDigit, int thirdDigit, int fourthDigit)
         {
             this.GuessesCount++;
 
@@ -177,7 +177,7 @@ namespace BullsAndCows
                 cows++;
             }
 
-            GuessResult guessResult = new GuessResult();
+            FormattedGuessResult guessResult = new FormattedGuessResult();
             guessResult.Bulls = bulls;
             guessResult.Cows = cows;
             return guessResult;

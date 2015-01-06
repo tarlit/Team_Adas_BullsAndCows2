@@ -1,8 +1,10 @@
 ﻿namespace BullsAndCows
 {
-    public enum GameCommands
+    public static class GameCommands
     {
-        Exit,
-        Top
+        public const string Exit = "exit";
+        public const string Top = "top";
+        public const string Restart = "restart";
+        public const string Help = "help";
     }
 }

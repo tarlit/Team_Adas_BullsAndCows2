@@ -5,7 +5,6 @@
     class ConsoleEngine
     {
         private static readonly ConsoleEngine consoleEngineInstance;
-        private string input;
         private string output;
         private SecretNumber secretNumber;
         private HintProvider hintProvider;
@@ -21,19 +20,6 @@
             private set
             {
                 this.output = value;
-            }
-        }
-
-        public string Input
-        {
-            get
-            {
-                return this.input;
-            }
-
-            set
-            {
-                this.input = value;
             }
         }
 
@@ -57,74 +43,93 @@
             }
         }
 
-        public void ParseCommand(string playerCommand)
+        public void ParseCommand(string playerInput)
         {
-                if (playerCommand == "exit")
+                if (playerInput == GameCommands.Exit)
                 {
                     this.output = GameConstants.GoodBuyMessage;
                 }
 
-                switch (playerCommand)
+                switch (playerInput)
                 {
-                    case "top":
-                        {
-                            this.output = scoreBoard.ToString();
-                            break;
-                        }
-                    case "restart":
-                        {
-                            this.output = GameConstants.WelcomeMessage;
-                            secretNumber = new SecretNumber();
-                            break;
-                        }
-                    case "help":
-                        {
-                            if (secretNumber == null)
-                            {
-                                this.output = GameConstants.EmptyInputMessage;
-                            }
-                            else
-                            {
-                                this.output = string.Format("The number looks like {0}.", this.hintProvider.GetHint(secretNumber));
-                            }
-                            break;   
-                        }
+                    case GameCommands.Top:
+                    {
+                        this.output = scoreBoard.ToString();
+                        break;
+                    }
+                    case GameCommands.Restart:
+                    {
+                        ProcessRestartCommand();
+                        break;
+                    }
+                    case GameCommands.Help:
+                    {
+                        ProcessHelpCommand();
+                        break;   
+                    }
                     default:
-                        {
-                            try
-                            {
-                                GuessResult guessResult = secretNumber.CheckGuessResult(playerCommand);
-                                if (guessResult.Bulls == 4)
-                                {
-                                    if (hintProvider.HintsUsed == 0)
-                                    {
-                                        this.output = string.Format(GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
-                                        string name = Console.ReadLine();
-                                        scoreBoard.AddScore(name, secretNumber.GuessesCount);
-                                    }
-                                    else
-                                    {
-                                        this.output = string.Format(GameConstants.NumberGuessedWithHints,
-                                            secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts",
-                                            hintProvider.HintsUsed, hintProvider.HintsUsed == 1 ? "cheat" : "cheats");
-                                    }
-                                    this.output = scoreBoard.ToString() + Environment.NewLine +
-                                                  GameConstants.WelcomeMessage + Environment.NewLine;
-                                    secretNumber = new SecretNumber();
-                                }
-                                else
-                                {
-                                    this.output = string.Format("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
-                                }
-                            }
-                            catch (ArgumentException)
-                            {
-                                this.output = GameConstants.InvalidCommandMessage;
-                            }
-                            break;
-                        }
+                    {
+                        ProcessGuessNumber(playerInput);
+                        break;
+                    }
                 }
             }
-            // scoreBoard.SaveToFile(GameConstants.ScoresFile);
+
+        public void SaveGameResult()
+        {
+            scoreBoard.SaveToFile(GameConstants.ScoresFile);
+        }
+
+        private void ProcessRestartCommand()
+        {
+            this.output = GameConstants.WelcomeMessage;
+            secretNumber = new SecretNumber();
+        }
+
+        private void ProcessHelpCommand()
+        {
+            if (secretNumber == null)
+            {
+                this.output = GameConstants.EmptyInputMessage;
+            }
+            else
+            {
+                this.output = string.Format("The number looks like {0}.", this.hintProvider.GetHint(secretNumber));
+            }
+        }
+
+        private void ProcessGuessNumber(string playerCommand)
+        {
+            try
+            {
+                FormattedGuessResult guessResult = secretNumber.CheckGuessResult(playerCommand);
+                if (guessResult.Bulls == 4)
+                {
+                    if (hintProvider.HintsUsed == 0)
+                    {
+                        this.output = string.Format(GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
+                        string name = Console.ReadLine();
+                        scoreBoard.AddScore(name, secretNumber.GuessesCount);
+                    }
+                    else
+                    {
+                        this.output = string.Format(GameConstants.NumberGuessedWithHints,
+                            secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts",
+                            hintProvider.HintsUsed, hintProvider.HintsUsed == 1 ? "cheat" : "cheats");
+                    }
+                    this.output = scoreBoard.ToString() + Environment.NewLine +
+                                    GameConstants.WelcomeMessage + Environment.NewLine;
+                    secretNumber = new SecretNumber();
+                }
+                else
+                {
+                    this.output = string.Format("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
+                }
+            }
+            catch (ArgumentException)
+            {
+                this.output = GameConstants.InvalidCommandMessage;
+            }
+        }
     }
 }
