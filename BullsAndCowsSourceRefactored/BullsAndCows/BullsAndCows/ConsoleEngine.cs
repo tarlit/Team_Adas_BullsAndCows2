@@ -107,7 +107,8 @@
                 {
                     if (hintProvider.HintsUsed == 0)
                     {
-                        this.output = string.Format(GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
+                        this.output = string.Format(
+                            GameConstants.NumberGuessedWithoutHints, secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts");
                         string name = Console.ReadLine();
                         scoreBoard.AddScore(name, secretNumber.GuessesCount);
                     }
@@ -117,7 +118,7 @@
                             secretNumber.GuessesCount, secretNumber.GuessesCount == 1 ? "attempt" : "attempts",
                             hintProvider.HintsUsed, hintProvider.HintsUsed == 1 ? "cheat" : "cheats");
                     }
-                    this.output = scoreBoard.ToString() + Environment.NewLine +
+                    this.output += scoreBoard.ToString() + Environment.NewLine +
                                     GameConstants.WelcomeMessage + Environment.NewLine;
                     secretNumber = new SecretNumber();
                 }
