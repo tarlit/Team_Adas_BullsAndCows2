@@ -27,8 +27,7 @@ Refactoring process
 *Design patterns*
 
 Implemented design patterns:
-•	Structural patterns – composite, extensibility, facade;
-•	Behavior patterns – chain of responsibility, command;
+•	Structural patterns – facade;
 •	Creational patterns – singleton;
 
 *Unit tests*
