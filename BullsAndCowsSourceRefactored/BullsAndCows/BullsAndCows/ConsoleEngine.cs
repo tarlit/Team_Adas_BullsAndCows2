@@ -11,6 +11,7 @@
         private HintProvider hintProvider;
         private ScoreBoard scoreBoard;
         private int guessesCount;
+        private string username;
 
         public string Output
         {
@@ -25,20 +26,21 @@
             }
         }
 
-        private ConsoleEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
+        private ConsoleEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard, string username)
         {
             this.secretNumber = secretNumber;
             this.hintProvider = hintProvider;
             this.scoreBoard = scoreBoard;
+            this.username = username;
             this.guessesCount = 0;
             this.output = GameConstants.WelcomeMessage;
         }
 
-        public static ConsoleEngine GetEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard)
+        public static ConsoleEngine GetEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard, string username)
         {
             if (consoleEngineInstance == null)
             {
-                return new ConsoleEngine(secretNumber, hintProvider, scoreBoard);
+                return new ConsoleEngine(secretNumber, hintProvider, scoreBoard, username);
             }
             else
             {
@@ -113,8 +115,7 @@
                     {
                         this.output = string.Format(
                             GameConstants.NumberGuessedWithoutHints, this.guessesCount, this.guessesCount == 1 ? "attempt" : "attempts");
-                        string name = Console.ReadLine();
-                        scoreBoard.AddScore(name, this.guessesCount);
+                        scoreBoard.AddScore(this.username, this.guessesCount);
                     }
                     else
                     {
@@ -130,6 +131,7 @@
                 else
                 {
                     this.output = string.Format("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
+                    this.guessesCount++;
                 }
             }
             catch (ArgumentException)

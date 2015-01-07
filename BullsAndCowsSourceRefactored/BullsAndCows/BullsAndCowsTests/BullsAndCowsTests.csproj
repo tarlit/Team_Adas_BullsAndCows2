@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BullsAndCowsUnitTests.cs" />
+    <Compile Include="GameCommandsUnitTests.cs" />
+    <Compile Include="GameConstantsUnitTests.cs" />
+    <Compile Include="GameEngineUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,10 +6,13 @@
      {
          static void Main()
          {
+             Console.Write(GameConstants.EnterUsernameMessage);
+             string username = Console.ReadLine();
+
              var hintProvider = new HintProvider();
              var secretNumber = SecretNumberProcessor.GenerateSecretNumber();
              var scoreBoard = new ScoreBoard(GameConstants.ScoresFile);
-             var consoleEngine = ConsoleEngine.GetEngine(secretNumber, hintProvider, scoreBoard);
+             var consoleEngine = ConsoleEngine.GetEngine(secretNumber, hintProvider, scoreBoard, username); 
              StartGame(consoleEngine);
          }
 

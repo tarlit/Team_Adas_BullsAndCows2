@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using System.Dynamic;
+using System.Runtime.Remoting.Messaging;
+
 namespace BullsAndCows
 {
     using System;
@@ -10,12 +14,12 @@ namespace BullsAndCows
 
         public static IList<int> GenerateSecretNumber()
         {
-            var secretNumber = new int[4];
+            var secretNumber = new int[GameConstants.SecretNumberDigitsCount];
 
-            secretNumber[0] = randomGenerator.Next(0, 10);
-            secretNumber[1] = randomGenerator.Next(0, 10);
-            secretNumber[2] = randomGenerator.Next(0, 10);
-            secretNumber[3] = randomGenerator.Next(0, 10);
+            for (int i = 0; i < GameConstants.SecretNumberDigitsCount; i++)
+            {
+                secretNumber[i] = randomGenerator.Next(0, 10);    
+            }
 
             return secretNumber;
         } 
@@ -51,119 +55,69 @@ namespace BullsAndCows
         private static FormattedGuessResult GetGuessResult(string guessNumberAsString, IList<int> secretNumber)
         {
             // this.GuessesCount++;
-
+            var isDigitBullOrCow = InitBoolArrayWithValue(GameConstants.SecretNumberDigitsCount, false);
             int bulls = 0;
-            var guessNumberDigits = new int[4];
-            guessNumberDigits[0] = int.Parse(guessNumberAsString[0].ToString());
-            guessNumberDigits[1] = int.Parse(guessNumberAsString[1].ToString());
-            guessNumberDigits[2] = int.Parse(guessNumberAsString[2].ToString());
-            guessNumberDigits[3] = int.Parse(guessNumberAsString[3].ToString());
-
-            bool isFirstDigitBullOrCow = false;
-            // checks if firstDigit is a bull:
-            if (secretNumber[0] == guessNumberDigits[0])
-            {
-                isFirstDigitBullOrCow = true;
-                bulls++;
-            }
-
-            bool isSecondDigitBullOrCow = false;
-            // checks if secondDigit is a bull:
-            if (secretNumber[1] == guessNumberDigits[1])
-            {
-                isSecondDigitBullOrCow = true;
-                bulls++;
-            }
-
-            bool isThirdDigitBullOrCow = false;
-            // checks if thirdDigit is a bull:
-            if (secretNumber[2] == guessNumberDigits[2])
-            {
-                isThirdDigitBullOrCow = true;
-                bulls++;
-            }
-
-            bool isFourthDigitBullOrCow = false;
-            // checks if fourthDigit is a bull:
-            if (secretNumber[3] == guessNumberDigits[3])
-            {
-                isFourthDigitBullOrCow = true;
-                bulls++;
-            }
-
             int cows = 0;
-            // checks if firstDigit is cow:
-            if (!isSecondDigitBullOrCow && guessNumberDigits[0] == secretNumber[1])
-            {
-                isSecondDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isThirdDigitBullOrCow && guessNumberDigits[0] == secretNumber[2])
-            {
-                isThirdDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isFourthDigitBullOrCow && guessNumberDigits[0] == secretNumber[3])
-            {
-                isFourthDigitBullOrCow = true;
-                cows++;
-            }
 
-            // checks if secondDigit is cow:
-            if (!isFirstDigitBullOrCow && guessNumberDigits[1] == secretNumber[0])
+            var guessNumberDigits = new int[GameConstants.SecretNumberDigitsCount];
+            for (int i = 0; i < GameConstants.SecretNumberDigitsCount; i++)
             {
-                isFirstDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isThirdDigitBullOrCow && guessNumberDigits[1] == secretNumber[2])
-            {
-                isThirdDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isFourthDigitBullOrCow && guessNumberDigits[1] == secretNumber[3])
-            {
-                isFourthDigitBullOrCow = true;
-                cows++;
-            }
+                guessNumberDigits[i] = int.Parse(guessNumberAsString[i].ToString());    
+            }       
 
-            // checks if thirdDigit is cow:
-            if (!isFirstDigitBullOrCow && guessNumberDigits[2] == secretNumber[0])
-            {
-                isFirstDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isSecondDigitBullOrCow && guessNumberDigits[2] == secretNumber[1])
-            {
-                isSecondDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isFourthDigitBullOrCow && guessNumberDigits[2] == secretNumber[3])
-            {
-                isFourthDigitBullOrCow = true;
-                cows++;
-            }
-
-            // checks if fourthDigit is cow:
-            if (!isFirstDigitBullOrCow && guessNumberDigits[3] == secretNumber[0])
-            {
-                isFirstDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isSecondDigitBullOrCow && guessNumberDigits[3] == secretNumber[1])
-            {
-                isSecondDigitBullOrCow = true;
-                cows++;
-            }
-            else if (!isThirdDigitBullOrCow && guessNumberDigits[3] == secretNumber[3])
-            {
-                isThirdDigitBullOrCow = true;
-                cows++;
-            }
+            bulls = GetBullsCount(ref isDigitBullOrCow, guessNumberDigits, secretNumber);
+            cows = GetCowsCount(ref isDigitBullOrCow, guessNumberDigits, secretNumber);
 
             FormattedGuessResult guessResult = new FormattedGuessResult();
             guessResult.Bulls = bulls;
             guessResult.Cows = cows;
             return guessResult;
+        }
+
+        private static bool[] InitBoolArrayWithValue(int length, bool value)
+        {
+            bool[] result = new bool[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = value;
+            }
+            return result;
+        }
+
+        private static int GetBullsCount(ref bool[] isDigitBullOrCow, int[] guessNumberDigits, IList<int> secretNumber)
+        {
+            int bulls = 0;
+            for (int i = 0; i < GameConstants.SecretNumberDigitsCount; i++)
+            {
+                if (secretNumber[i] == guessNumberDigits[i])
+                {
+                    isDigitBullOrCow[i] = true;
+                    bulls++;
+                }
+            }
+            return bulls;
+        }
+
+        private static int GetCowsCount(ref bool[] isDigitBullOrCow, int[] guessNumberDigits, IList<int> secretNumber)
+        {
+            int cows = 0;
+            for (int k = 0; k < GameConstants.SecretNumberDigitsCount; k++)
+            {
+                bool isCowFound = false;
+                for (int i = 0; i < GameConstants.SecretNumberDigitsCount; i++)
+                {
+                    if (i != k && !isCowFound)
+                    {
+                        if (!isDigitBullOrCow[i] && guessNumberDigits[k] == secretNumber[i])
+                        {
+                            isDigitBullOrCow[i] = true;
+                            isCowFound = true;
+                            cows++;
+                        }
+                    }
+                }
+            }
+            return cows;
         }
     }
 }

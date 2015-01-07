@@ -1,4 +1,6 @@
-﻿namespace BullsAndCowsTests
+﻿using System.Linq;
+
+namespace BullsAndCowsTests
 {
     using System;
     using System.Collections.Generic;
@@ -53,6 +55,67 @@
             {
                 SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber);
             }, "Passing empty guess number didn't throw correct exception.");
+        }
+
+        [Test]
+        public void GuessNumberOneBullOneCow()
+        {
+            string guessNumber = "1536";
+            FormattedGuessResult guessResult = new FormattedGuessResult();
+            guessResult.Bulls = 1;
+            guessResult.Cows = 1;
+
+            Assert.AreEqual(SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber), guessResult);
+        }
+
+        [Test]
+        public void GuessNumberFourBullZeroCow()
+        {
+            string guessNumber = "1243";
+            FormattedGuessResult guessResult = new FormattedGuessResult();
+            guessResult.Bulls = 4;
+            guessResult.Cows = 0;
+
+            Assert.AreEqual(SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber), guessResult);
+        }
+
+        [Test]
+        public void GuessNumberZeroBullZeroCow()
+        {
+            string guessNumber = "5566";
+            FormattedGuessResult guessResult = new FormattedGuessResult();
+            guessResult.Bulls = 0;
+            guessResult.Cows = 0;
+
+            Assert.AreEqual(SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber), guessResult);
+        }
+
+        [Test]
+        public void GuessNumberZeroBullFourCow()
+        {
+            string guessNumber = "3412";
+            FormattedGuessResult guessResult = new FormattedGuessResult();
+            guessResult.Bulls = 0;
+            guessResult.Cows = 4;
+
+            Assert.AreEqual(SecretNumberProcessor.CheckGuessResult(guessNumber, testSecretNumber), guessResult);
+        }
+
+        [Test]
+        public void GenerateSecretNumberLength()
+        {
+            IList<int> secretNumber = SecretNumberProcessor.GenerateSecretNumber();
+
+            Assert.AreEqual(secretNumber.Count, 4);
+        }
+
+        [Test]
+        public void GenerateSecretNumberValues()
+        {
+            IList<int> secretNumber = SecretNumberProcessor.GenerateSecretNumber();
+            int n;
+            Console.WriteLine(secretNumber.ToString());
+            Assert.IsTrue(int.TryParse(secretNumber[0].ToString(), out n));
         }
     }
 }
