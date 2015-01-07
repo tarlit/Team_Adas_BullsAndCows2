@@ -20,7 +20,7 @@ namespace BullsAndCows
             return secretNumber;
         } 
 
-        public static FormattedGuessResult CheckGuessResult(string stringInput, IList<int> secretNumber)
+        public static AnswerProvider CheckGuessResult(string stringInput, IList<int> secretNumber)
         {
             ValidateGuessNumber(stringInput);
             return GetGuessResult(stringInput, secretNumber);
@@ -49,7 +49,7 @@ namespace BullsAndCows
             return guessNumber;
         }
 
-        private static FormattedGuessResult GetGuessResult(string guessNumberAsString, IList<int> secretNumber)
+        private static AnswerProvider GetGuessResult(string guessNumberAsString, IList<int> secretNumber)
         {
             var isDigitBullOrCow = InitBoolArrayWithValue(GameConstants.SecretNumberDigitsCount, false);
             int bulls = 0;
@@ -64,7 +64,7 @@ namespace BullsAndCows
             bulls = GetBullsCount(ref isDigitBullOrCow, guessNumberDigits, secretNumber);
             cows = GetCowsCount(ref isDigitBullOrCow, guessNumberDigits, secretNumber);
 
-            var guessResult = new FormattedGuessResult();
+            var guessResult = new AnswerProvider();
             guessResult.Bulls = bulls;
             guessResult.Cows = cows;
             return guessResult;

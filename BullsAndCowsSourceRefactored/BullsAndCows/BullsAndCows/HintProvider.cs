@@ -46,6 +46,7 @@
                 }
                 HintsUsed++;
             }
+
             return new String(hintNumber);
         }
     }

@@ -101,7 +101,7 @@
         {
             try
             {
-                FormattedGuessResult guessResult = SecretNumberProcessor.CheckGuessResult(playerCommand, this.secretNumber);
+                AnswerProvider guessResult = SecretNumberProcessor.CheckGuessResult(playerCommand, this.secretNumber);
                 if (guessResult.Bulls == 4)
                 {
                     if (hintProvider.HintsUsed == 0)

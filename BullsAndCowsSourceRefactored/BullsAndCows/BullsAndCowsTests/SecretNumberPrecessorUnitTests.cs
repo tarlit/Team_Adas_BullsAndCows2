@@ -59,7 +59,7 @@
         public void GuessNumberOneBullOneCow()
         {
             string guessNumber = "1536";
-            FormattedGuessResult guessResult = new FormattedGuessResult();
+            AnswerProvider guessResult = new AnswerProvider();
             guessResult.Bulls = 1;
             guessResult.Cows = 1;
 
@@ -70,7 +70,7 @@
         public void GuessNumberFourBullZeroCow()
         {
             string guessNumber = "1243";
-            FormattedGuessResult guessResult = new FormattedGuessResult();
+            AnswerProvider guessResult = new AnswerProvider();
             guessResult.Bulls = 4;
             guessResult.Cows = 0;
 
@@ -81,7 +81,7 @@
         public void GuessNumberZeroBullZeroCow()
         {
             string guessNumber = "5566";
-            FormattedGuessResult guessResult = new FormattedGuessResult();
+            AnswerProvider guessResult = new AnswerProvider();
             guessResult.Bulls = 0;
             guessResult.Cows = 0;
 
@@ -92,7 +92,7 @@
         public void GuessNumberZeroBullFourCow()
         {
             string guessNumber = "3412";
-            FormattedGuessResult guessResult = new FormattedGuessResult();
+            AnswerProvider guessResult = new AnswerProvider();
             guessResult.Bulls = 0;
             guessResult.Cows = 4;
 

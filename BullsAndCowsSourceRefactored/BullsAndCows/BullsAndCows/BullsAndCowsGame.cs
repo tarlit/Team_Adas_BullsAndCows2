@@ -14,7 +14,7 @@
              var hintProvider = new HintProvider();
              var secretNumber = SecretNumberProcessor.GenerateSecretNumber();
              var scoreBoard = new ScoreBoard(GameConstants.ScoresFile);
-             var consoleEngine = GameEngine.GetEngine(secretNumber, hintProvider, scoreBoard, username); 
+             var consoleEngine = GameEngine.GetEngine(secretNumber, hintProvider, scoreBoard, username);
              StartGame(consoleEngine);
          }
 
