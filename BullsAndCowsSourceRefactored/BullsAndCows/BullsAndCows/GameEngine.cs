@@ -2,14 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using BullsAndCows.Interfaces;
 
-    class ConsoleEngine
+    public class GameEngine : IGameEngine
     {
-        private static readonly ConsoleEngine consoleEngineInstance;
+        private static GameEngine consoleEngineInstance;
         private string output;
-        private IList<int> secretNumber;
         private HintProvider hintProvider;
-        private ScoreBoard scoreBoard;
+        private IList<int> secretNumber;
+        private IResultStorage scoreBoard;
         private int guessesCount;
         private string username;
 
@@ -26,7 +27,7 @@
             }
         }
 
-        private ConsoleEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard, string username)
+        private GameEngine(IList<int> secretNumber, HintProvider hintProvider, IResultStorage scoreBoard, string username)
         {
             this.secretNumber = secretNumber;
             this.hintProvider = hintProvider;
@@ -36,16 +37,14 @@
             this.output = GameConstants.WelcomeMessage;
         }
 
-        public static ConsoleEngine GetEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard, string username)
+        public static GameEngine GetEngine(IList<int> secretNumber, HintProvider hintProvider, ScoreBoard scoreBoard, string username)
         {
             if (consoleEngineInstance == null)
             {
-                return new ConsoleEngine(secretNumber, hintProvider, scoreBoard, username);
+                consoleEngineInstance = new GameEngine(secretNumber, hintProvider, scoreBoard, username);
             }
-            else
-            {
-                return consoleEngineInstance;
-            }
+
+            return consoleEngineInstance;
         }
 
         public void ParseCommand(string playerInput)
@@ -53,6 +52,7 @@
             if (playerInput == GameCommands.Exit)
             {
                 this.output = GameConstants.GoodBuyMessage;
+                return;
             }
 
             switch (playerInput)
@@ -80,28 +80,21 @@
             }
         }
 
-        public void SaveGameResult()
+        public void SaveGameResultToFile()
         {
             scoreBoard.SaveToFile(GameConstants.ScoresFile);
         }
 
         private void ProcessRestartCommand()
         {
-            this.output = GameConstants.WelcomeMessage;
+            this.Output = GameConstants.WelcomeMessage;
             secretNumber = SecretNumberProcessor.GenerateSecretNumber();
             this.guessesCount = 0;
         }
 
         private void ProcessHelpCommand()
         {
-            if (secretNumber == null)
-            {
-                this.output = GameConstants.EmptyInputMessage;
-            }
-            else
-            {
-                this.output = string.Format("The number looks like {0}.", this.hintProvider.GetHint(secretNumber));
-            }
+            this.Output = string.Format(GameConstants.HintMessage, this.hintProvider.GetHint(secretNumber));
         }
 
         private void ProcessGuessNumber(string playerCommand)
@@ -113,30 +106,31 @@
                 {
                     if (hintProvider.HintsUsed == 0)
                     {
-                        this.output = string.Format(
+                        this.Output = string.Format(
                             GameConstants.NumberGuessedWithoutHints, this.guessesCount, this.guessesCount == 1 ? "attempt" : "attempts");
                         scoreBoard.AddScore(this.username, this.guessesCount);
                     }
                     else
                     {
-                        this.output = string.Format(GameConstants.NumberGuessedWithHints,
+                        this.Output = string.Format(GameConstants.NumberGuessedWithHints,
                             this.guessesCount, this.guessesCount == 1 ? "attempt" : "attempts",
                             hintProvider.HintsUsed, hintProvider.HintsUsed == 1 ? "cheat" : "cheats");
                     }
-                    this.output += scoreBoard.ToString() + Environment.NewLine +
+
+                    this.Output += scoreBoard.ToString() + Environment.NewLine +
                                     GameConstants.WelcomeMessage + Environment.NewLine;
                     secretNumber = SecretNumberProcessor.GenerateSecretNumber();
                     this.guessesCount = 0;
                 }
                 else
                 {
-                    this.output = string.Format("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
+                    this.Output = string.Format("{0} {1}", GameConstants.WrongNumberMessage, guessResult);
                     this.guessesCount++;
                 }
             }
             catch (ArgumentException)
             {
-                this.output = GameConstants.InvalidCommandMessage;
+                this.Output = GameConstants.InvalidCommandMessage;
             }
         }
     }

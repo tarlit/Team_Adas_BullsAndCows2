@@ -1,4 +1,4 @@
-namespace BullsAndCows
+﻿namespace BullsAndCows
 {
     using System;
 
@@ -54,7 +54,7 @@ namespace BullsAndCows
             }
             if (this.PlayerGuesses.CompareTo(objectToCompare.PlayerGuesses) == 0)
             {
-				return this.PlayerName.CompareTo(objectToCompare.PlayerName);
+                return this.PlayerName.CompareTo(objectToCompare.PlayerName);
             }
             else
             {

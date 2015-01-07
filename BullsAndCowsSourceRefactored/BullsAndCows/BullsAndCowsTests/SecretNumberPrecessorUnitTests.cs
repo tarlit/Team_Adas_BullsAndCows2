@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace BullsAndCowsTests
+﻿namespace BullsAndCowsTests
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +7,7 @@ namespace BullsAndCowsTests
 
     [TestFixture]
 
-    public class BullsAndCowsUnitTests
+    public class SecretNumberPrecessorUnitTests
     {
         private static IList<int> testSecretNumber = new int[] {1, 2, 4, 3};
 

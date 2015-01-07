@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BullsAndCows;
-using NUnit.Framework;
-
-namespace BullsAndCowsTests
+﻿namespace BullsAndCowsTests
 {
+    using BullsAndCows;
+    using NUnit.Framework;
+
     class GameConstantsUnitTests
     {
         [Test]

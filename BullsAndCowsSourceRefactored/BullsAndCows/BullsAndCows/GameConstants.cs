@@ -17,5 +17,7 @@ namespace BullsAndCows
         public const string WrongLenghtInputMessage = "Wrong length for the input string";
         public const string IncorrectNumberMessage = "Input string is not a correct number";
         public const string EnterUsernameMessage = "Please provide you username for the scoreboard before you start the game: ";
+        public const string HintMessage = "The number looks like {0}.";
+        public const string GuessResultFormat = "Bulls: {0}, Cows: {1}";
     }
 }

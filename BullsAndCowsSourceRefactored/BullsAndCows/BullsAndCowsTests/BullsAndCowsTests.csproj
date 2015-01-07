@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BullsAndCowsUnitTests.cs" />
+    <Compile Include="SecretNumberPrecessorUnitTests.cs" />
     <Compile Include="GameCommandsUnitTests.cs" />
     <Compile Include="GameConstantsUnitTests.cs" />
     <Compile Include="GameEngineUnitTests.cs" />
